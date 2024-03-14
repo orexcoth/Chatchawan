@@ -22,17 +22,17 @@
             <div class="intro-y col-span-12 lg:col-span-12">
                 <!-- BEGIN: Form Layout -->
                 <div class="intro-y box p-5">
-                    
+
 
                     <div class="p-5">
                         <div class="grid grid-cols-12 gap-x-5">
                             <div class="col-span-12 xl:col-span-6">
-                                
+
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">ชื่อ</label>
                                     <input type="text" class="form-control w-full" value="" name="name" autocomplete="off" required />
                                 </div>
-                                
+
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">อีเมล</label>
                                     <input type="text" class="form-control w-full" value="" name="email"  autocomplete="off" />
@@ -48,12 +48,13 @@
 
                             </div>
                             <div class="col-span-12 xl:col-span-6">
-                                
+
                                 <div class="mt-3">
                                     <label for="" class="form-label">หน้าที่</label>
                                     <select name="role" class="form-control w-full" name="role" required >
-                                        <option value="admin" selected >แอดมิน</option>
-                                        <option value="creator" >พนักงาน</option>
+                                        <option value="admin" selected >Admin</option>
+                                        <option value="user" >User</option>
+                                        <option value="distributor" >Distributor</option>
                                     </select>
                                 </div>
                                 <div class="mt-3 ">
@@ -61,15 +62,15 @@
                                     <input type="password" class="form-control w-full" id="" name="password" >
                                 </div>
 
-                                
-                                
+
+
 
                             </div>
                         </div>
 
                         <div class="grid grid-cols-12 gap-x-5">
                             <div class="col-span-12 xl:col-span-6">
-                                
+
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">รูปโปรไฟล์</label>
                                     <input type="file" class="form-control w-full" id="" name="photo"  autocomplete="off" accept="image/*" />

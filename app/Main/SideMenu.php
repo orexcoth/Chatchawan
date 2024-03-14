@@ -25,6 +25,42 @@ class SideMenu
                 'params' => [],
                 'title' => 'ยูสเซอร์'
             ],
+            'distributor_sub' => [
+                'icon' => 'Users',
+                'route_name' => 'distributor_sub',
+                'params' => [],
+                'title' => 'ผู้จัดจำหน่ายรายย่อย'
+            ],
+            'products' => [
+                'icon' => 'package',
+                'route_name' => 'products',
+                'params' => [],
+                'title' => 'สินค้า'
+            ],
+            'Manage' => [
+                'icon' => 'Settings',
+                'title' => 'จัดการข้อมูล',
+                'sub_menu' => [
+                    'manage-system' => [
+                        'icon' => 'group',
+                        'route_name' => 'unit',
+                        'params' => [],
+                        'title' => 'หน่วยนับ'
+                    ],
+                    'manage-box-type' => [
+                        'icon' => 'Box',
+                        'route_name' => 'box_type',
+                        'params' => [],
+                        'title' => 'ประเภทกล่อง'
+                    ],
+                    'manage-regions' => [
+                        'icon' => 'Box',
+                        'route_name' => 'regions',
+                        'params' => [],
+                        'title' => 'ทวีป'
+                    ]
+                ]
+            ],
             'settings' => [
                 'icon' => 'Settings',
                 'title' => 'ตั้งค่า',
@@ -72,7 +108,7 @@ class SideMenu
             //     'params' => [],
             //     'title' => 'mosaic'
             // ],
-            
+
             // 'customers' => [
             //     'icon' => 'Users',
             //     'route_name' => 'BN_customers',
@@ -140,7 +176,7 @@ class SideMenu
             //     'params' => [],
             //     'title' => 'ข่าว'
             // ],
-            
+
             // 'contacts' => [
             //     'icon' => 'Phone Forwarded',
             //     'route_name' => 'BN_contacts',
@@ -184,7 +220,7 @@ class SideMenu
             //     'params' => [],
             //     'title' => 'Log'
             // ],
-            
+
             // 'dev' => [
             //     'icon' => 'Cloud-Lightning',
             //     'route_name' => 'BN_dev',

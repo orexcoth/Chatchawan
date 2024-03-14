@@ -23,54 +23,55 @@
             <div class="intro-y col-span-12 lg:col-span-12">
                 <!-- BEGIN: Form Layout -->
                 <div class="intro-y box p-5">
-
+                    
 
                     <div class="p-5">
                         <div class="grid grid-cols-12 gap-x-5">
                             <div class="col-span-12 xl:col-span-6">
-
+                                
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">ชื่อ</label>
                                     <input type="text" class="form-control w-full" value="{{$user->name}}" name="name" autocomplete="off" required />
                                 </div>
-
+                                
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">อีเมล</label>
                                     <input type="text" class="form-control w-full" value="{{$user->email}}" name="email"  autocomplete="off" />
                                 </div>
-
+                                
 
 
                             </div>
                             <div class="col-span-12 xl:col-span-6">
-
+                                
                                 <div class="mt-3">
                                     <label for="" class="form-label">หน้าที่</label>
                                     <select name="role" class="form-control w-full" name="role" required >
-                                        <option value="admin" {{($user->role=='admin')?'selected':''}} >Admin</option>
-                                        <option value="user" {{($user->role=='user')?'selected':''}} >User</option>
-                                        <option value="distributor" {{($user->role=='distributor')?'selected':''}} >Distributor</option>
-
+                                        <option value="admin" {{($user->role=='admin')?'selected':''}} >แอดมิน</option>
+                                        <option value="creator" {{($user->role=='creator')?'selected':''}} >พนักงาน</option>
                                     </select>
                                 </div>
-                                 {{-- <div class="mt-3">
-                                    <label for="" class="form-label">รหัสผู้แทนจำหน่าย</label>
-                                    <input type="text" class="form-control w-full" value="{{$user->code}}" name="code"  autocomplete="off" />
-                                </div> --}}
+                                <!-- <div class="mt-3">
+                                    <label for="" class="form-label">แอคทีฟ</label>
+                                    <select class="form-control w-full" name="active" required >
+                                        <option value="1" selected >แอคทีฟ</option>
+                                        <option value="2" >ไม่แอคทีฟ</option>
+                                    </select>
+                                </div> -->
                                 <!-- <div class="mt-3 ">
                                     <label for="" class="form-label">พาสเวิร์ด</label>
                                     <input type="password" class="form-control w-full" id="" name="password" >
                                 </div> -->
 
-
-
+                                
+                                
 
                             </div>
                         </div>
 
                         <div class="grid grid-cols-12 gap-x-5">
                             <div class="col-span-12 xl:col-span-6">
-
+                                
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">รูปโปรไฟล์</label>
                                     <input type="file" class="form-control w-full" id="" name="photo"  autocomplete="off" accept="image/*" />
