@@ -42,6 +42,7 @@
 
 
                     <div class="text-right mt-5">
+                        <a href="{{ route('box_type') }}" class="btn btn-danger w-24">ยกเลิก</a>
                         <button type="submit" class="btn btn-primary w-24">บันทึก</button>
                     </div>
                 </div>

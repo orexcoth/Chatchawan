@@ -23,27 +23,27 @@
             <div class="intro-y col-span-12 lg:col-span-12">
                 <!-- BEGIN: Form Layout -->
                 <div class="intro-y box p-5">
-                    
+
 
                     <div class="p-5">
                         <div class="grid grid-cols-12 gap-x-5">
                             <div class="col-span-12 xl:col-span-6">
-                                
+
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">ชื่อ</label>
                                     <input type="text" class="form-control w-full" value="{{$user->name}}" name="name" autocomplete="off" required />
                                 </div>
-                                
+
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">อีเมล</label>
                                     <input type="text" class="form-control w-full" value="{{$user->email}}" name="email"  autocomplete="off" />
                                 </div>
-                                
+
 
 
                             </div>
                             <div class="col-span-12 xl:col-span-6">
-                                
+
                                 <div class="mt-3">
                                     <label for="" class="form-label">หน้าที่</label>
                                     <select name="role" class="form-control w-full" name="role" required >
@@ -63,15 +63,15 @@
                                     <input type="password" class="form-control w-full" id="" name="password" >
                                 </div> -->
 
-                                
-                                
+
+
 
                             </div>
                         </div>
 
                         <div class="grid grid-cols-12 gap-x-5">
                             <div class="col-span-12 xl:col-span-6">
-                                
+
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">รูปโปรไฟล์</label>
                                     <input type="file" class="form-control w-full" id="" name="photo"  autocomplete="off" accept="image/*" />
@@ -109,6 +109,7 @@
 
 
                     <div class="text-right mt-5">
+                        <a href="{{ route('products') }}" class="btn btn-danger w-24">ยกเลิก</a>
                         <button type="submit" class="btn btn-primary w-24">บันทึก</button>
                     </div>
                 </div>

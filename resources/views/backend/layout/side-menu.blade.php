@@ -18,7 +18,7 @@ $arr = [];
         <!-- BEGIN: Side Menu -->
         <nav class="side-nav">
             <a href="{{route('backendDashboard')}}" class="intro-x flex items-center pl-5 pt-4 mt-3">
-                <img alt="signaturethailand" class="" src="{{asset('dist/images/logo_orange.png')}}">
+                <img alt="signaturethailand" class="" src="https://cdn.page.deals/static/1/s/568/609/949/05/51643939_large.png" style="width: 132px;">
                 <!-- <span class="hidden xl:block text-white text-lg ml-3">
                     รถพร้อมขาย
                 </span> -->
@@ -29,7 +29,7 @@ $arr = [];
                     @if ($menu == 'devider')
                         <li class="side-nav__devider my-6"></li>
                     @else
-                        
+
                         <li>
                             <a href="{{ isset($menu['route_name']) ? route($menu['route_name'], $menu['params']) : 'javascript:;' }}" class="{{ $first_level_active_index == $menuKey ? 'side-menu side-menu--active' : 'side-menu' }}">
                                 <div class="side-menu__icon">
@@ -80,8 +80,8 @@ $arr = [];
                                 </ul>
                             @endif
                         </li>
-                        
-                        
+
+
                     @endif
                 @endforeach
             </ul>

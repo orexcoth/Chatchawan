@@ -100,6 +100,7 @@
 
 
                     <div class="text-right mt-5">
+                        <a href="{{ route('BN_users') }}" class="btn btn-danger w-24">ยกเลิก</a>
                         <button type="submit" class="btn btn-primary w-24">บันทึก</button>
                     </div>
                 </div>
