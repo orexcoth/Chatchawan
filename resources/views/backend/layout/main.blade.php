@@ -4,13 +4,14 @@
     <body class="py-5 md:py-0 bg-black/[0.15] dark:bg-transparent">
         @yield('content')
 
-
+        {{-- @include('../backend/layout/components/dark-mode-switcher') --}}
+        {{-- @include('../backend/layout/components/main-color-switcher') --}}
         <!-- BEGIN: JS Assets-->
         <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
 
         <script src="{{asset('myassets/js/jquery.min.js')}}"></script>
-        <script src="{{asset('myassets/js/jquery-ui.min.js')}}"></script> 
+        <script src="{{asset('myassets/js/jquery-ui.min.js')}}"></script>
         <script src="{{asset('myassets/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('myassets/js/owl.carousel.js')}}"></script>
         <script src="{{asset('myassets/js/wow.min.js')}}"></script>
@@ -30,7 +31,7 @@
 
         @yield('script')
         @if(session('success'))
-                    
+
         <script>
             // Swal.fire(
             //     'Success',
