@@ -16,6 +16,9 @@ use App\Http\Controllers\Backend\RegionsController;
 use App\Http\Controllers\Backend\UnitController;
 use App\Http\Controllers\Backend\BoxTypeController;
 use App\Http\Controllers\Backend\DistributorSubController;
+use App\Http\Controllers\Backend\TypeProductsController;
+use App\Http\Controllers\Backend\BoxsController;
+
 
 
 use App\Http\Controllers\Frontend\FrontendPageController;
@@ -136,6 +139,22 @@ Route::middleware('auth')->group(function () {
             Route::post('edit-action', [DistributorSubController::class, 'distributor_sub_edit_action'])->name('distributor_sub_edit_action');
         });
 
+        Route::prefix('type_products')->group(function () {
+            Route::get('', [TypeProductsController::class, 'type_products'])->name('type_products');
+            Route::get('add', [TypeProductsController::class, 'type_products_add'])->name('type_products_add');
+            Route::post('add-action', [TypeProductsController::class, 'type_products_add_action'])->name('type_products_add_action');
+            Route::get('edit/{id}', [TypeProductsController::class, 'type_products_edit'])->name('type_products_edit');
+            Route::post('edit-action', [TypeProductsController::class, 'type_products_edit_action'])->name('type_products_edit_action');
+        });
+
+
+        Route::prefix('box')->group(function () {
+            Route::get('', [BoxsController::class, 'box'])->name('box');
+            Route::get('add', [BoxsController::class, 'box_add'])->name('box_add');
+            Route::post('add-action', [BoxsController::class, 'box_add_action'])->name('box_add_action');
+            Route::get('edit/{id}', [BoxsController::class, 'box_edit'])->name('box_edit');
+            Route::post('edit-action', [BoxsController::class, 'box_edit_action'])->name('box_edit_action');
+        });
 
         Route::prefix('settings')->group(function () {
             Route::get('', [BackendPageController::class, 'BN_settings'])->name('BN_settings');

@@ -47,11 +47,23 @@ class SideMenu
                         'params' => [],
                         'title' => 'หน่วยนับ'
                     ],
+                    'manage-type_products' => [
+                        'icon' => 'Box',
+                        'route_name' => 'type_products',
+                        'params' => [],
+                        'title' => 'ประเภทสินค้า'
+                    ],
                     'manage-box-type' => [
                         'icon' => 'Box',
                         'route_name' => 'box_type',
                         'params' => [],
                         'title' => 'ประเภทกล่อง'
+                    ],
+                    'manage-box' => [
+                        'icon' => 'Box',
+                        'route_name' => 'box',
+                        'params' => [],
+                        'title' => 'กล่อง'
                     ],
                     'manage-regions' => [
                         'icon' => 'Box',

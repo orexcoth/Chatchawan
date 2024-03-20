@@ -9,10 +9,13 @@
         use App\Models\Regions;
         use App\Models\Unit;
         use App\Models\BoxType;
+        use App\Models\TypeProducts;
+
 
         $regions = Regions::where('active', 1)->orderBy('id')->get();
         $units = Unit::where('active', 1)->orderBy('id')->get();
         $box_type = BoxType::where('active', 1)->orderBy('id')->get();
+        $type_products = TypeProducts::where('active', 1)->orderBy('id')->get();
 
     @endphp
     <?php
@@ -52,6 +55,18 @@
                                     <input type="text" class="form-control w-full" value="" name="name_th"
                                         autocomplete="off" required />
                                 </div>
+                            </div>
+                            <div class="col-span-12 xl:col-span-6">
+
+                                <div class="mt-3 ">
+                                    <label for="" class="form-label">ชื่อสินค้า EN</label>
+                                    <input type="text" class="form-control w-full" value="" name="name_en"
+                                        autocomplete="off" required />
+                                </div>
+
+
+                            </div>
+                            <div class="col-span-12 xl:col-span-6">
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">รายละเอียดสินค้า</label>
                                     <textarea class="form-control w-full" name="detail" cols="10" rows="10" style="height: 80px"></textarea>
@@ -61,31 +76,56 @@
                             <div class="col-span-12 xl:col-span-6">
 
                                 <div class="mt-3 ">
-                                    <label for="" class="form-label">ชื่อสินค้า EN</label>
-                                    <input type="text" class="form-control w-full" value="" name="name_en"
-                                        autocomplete="off" required />
+                                    <label for="" class="form-label">ประเภทของกล่องที่บบรรจุ</label>
+                                    <select data-placeholder="กรุณาเลือกข้อมูล..." class="tom-select w-full"
+                                        id="box_type_id" name="box_type_id[]" multiple>
+                                        @foreach ($box_type as $item)
+                                            <option value="{{ $item->id }}" >{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <!-- <div class="mt-3">
-                                                        <label for="" class="form-label">แอคทีฟ</label>
-                                                        <select class="form-control w-full" name="active" required >
-                                                            <option value="1" selected >แอคทีฟ</option>
-                                                            <option value="2" >ไม่แอคทีฟ</option>
-                                                        </select>
-                                                    </div> -->
-
-
                             </div>
+
                             <div class="col-span-6 xl:col-span-3">
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">กว้าง</label>
-                                    <input type="number" class="form-control w-full" value="" name="width"
+                                    <input type="number" class="form-control w-full" value="" name="width" step="0.01"
                                         autocomplete="off" />
                                 </div>
 
+                            </div>
+
+                            <div class="col-span-6 xl:col-span-3">
+                                <div class="mt-3 ">
+                                    <label for="" class="form-label">ยาว</label>
+                                    <input type="number" class="form-control w-full" value="" name="length" step="0.01"
+                                        autocomplete="off" />
+                                </div>
+                            </div>
+
+                            <div class="col-span-6 xl:col-span-3">
+                                <div class="mt-3 ">
+                                    <label for="" class="form-label">สูง</label>
+                                    <input type="number" class="form-control w-full" value="" name="height" step="0.01"
+                                        autocomplete="off" />
+                                </div>
+                            </div>
+
+                            <div class="col-span-6 xl:col-span-3">
+                                <div class="mt-3 ">
+                                    <label for="" class="form-label">น้ำหนัก (KG)</label>
+                                    <input type="number" class="form-control w-full" value="" name="weight" step="0.01"
+                                        autocomplete="off" />
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-span-6 xl:col-span-3">
                                 <div class="mt-3">
                                     <label for="" class="form-label">หน่วยนับ</label>
-                                    <select data-placeholder="กรุณาเลือกข้อมูล..." class="tom-select w-full"
-                                        name="unit_id" required>
+                                    <select data-placeholder="กรุณาเลือกข้อมูล..." class="tom-select w-full" name="unit_id"
+                                        required>
                                         @foreach ($units as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                                         @endforeach
@@ -94,43 +134,34 @@
 
 
                             </div>
-                            <div class="col-span-6 xl:col-span-3">
-                                <div class="mt-3 ">
-                                    <label for="" class="form-label">ยาว</label>
-                                    <input type="number" class="form-control w-full" value="" name="lengt"
-                                        autocomplete="off" />
-                                </div>
 
+                            <div class="col-span-6 xl:col-span-3">
                                 <div class="mt-3">
                                     <label for="" class="form-label">ประเภทสินค้า</label>
-                                    <select class="form-control w-full" name="type_id" required>
-                                        <option value="Vegetable" selected>Vegetable</option>
-                                        <option value="Fruit">Fruit</option>
+                                    <select data-placeholder="กรุณาเลือกข้อมูล..." class="tom-select w-full" name="type_id"
+                                        required>
+                                        @foreach ($type_products as $item)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endforeach
                                     </select>
+
                                 </div>
                             </div>
-                            <div class="col-span-6 xl:col-span-3">
-                                <div class="mt-3 ">
-                                    <label for="" class="form-label">สูง</label>
-                                    <input type="number" class="form-control w-full" value="" name="high"
-                                        autocomplete="off" />
-                                </div>
+
+
+                            {{-- <div class="col-span-6 xl:col-span-3">
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">ประเภทการจัดส่ง</label>
-                                    <select class="form-control w-full" name="type_id" required>
+                                    <select class="form-control w-full" name="pack_type_id" required>
                                         <option value="Vegetable" selected>ผ่านเกษตร</option>
                                         <option value="Fruit">ไม่ผ่านเกษตร</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-span-6 xl:col-span-3">
-                                <div class="mt-3 ">
-                                    <label for="" class="form-label">น้ำหนัก</label>
-                                    <input type="number" class="form-control w-full" value="" name="weight"
-                                        autocomplete="off" />
-                                </div>
 
+
+                            {{-- <div class="col-span-6 xl:col-span-3">
                                 <div class="mt-3 ">
                                     <label for="" class="form-label">สถานะ</label>
                                     <select class="form-control w-full" name="active" required>
@@ -138,23 +169,8 @@
                                         <option value="0">ไม่ใช้งาน</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-span-12 xl:col-span-6">
+                            </div> --}}
 
-                                <div class="mt-3 ">
-                                    <label for="" class="form-label">ประเภทของกล่องที่บบรรจุ</label>
-                                    <select data-placeholder="กรุณาเลือกข้อมูล..." class="tom-select w-full"
-                                        id="box_type_id" name="box_type_id[]" multiple>
-                                        @foreach ($box_type as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-
-
-
-                            </div>
                         </div>
 
                         <div class="grid grid-cols-12 gap-x-5">
@@ -171,8 +187,8 @@
                                                 {{ $item->name }}
                                             </div>
 
-                                            <select data-placeholder="กรุณาเลือกข้อมูล..."
-                                                class="tom-select w-full" id="crud-form-2" multiple>
+                                            <select data-placeholder="กรุณาเลือกข้อมูล..." class="tom-select w-full"
+                                                name="group[{{ $item->id }}][]" multiple>
                                                 @for ($i = 0; $i < 6; $i++)
                                                     <option value="{{ $i + 1 }}">{{ $i + 1 }}
                                                     </option>

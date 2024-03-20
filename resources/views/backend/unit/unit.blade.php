@@ -85,7 +85,7 @@
     <script>
         function applyFilters() {
             var keyword = document.getElementById('keyword').value;
-            var newUrl = `{{ route('BN_users') }}?keyword=${keyword}`;
+            var newUrl = `{{ route('unit') }}?keyword=${keyword}`;
             window.location.href = newUrl;
         }
 

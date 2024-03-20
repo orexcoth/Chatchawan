@@ -15,9 +15,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\DB;
 
 
 use App\Models\Products;
+use App\Models\ProductGroup;
+use App\Models\ProductBoxType;
+
+
 
 class ProductsController extends Controller
 {
@@ -40,22 +45,23 @@ class ProductsController extends Controller
     public function products(Request $request)
     {
         $products = Products::query()
-        // ->where('phone',$request->s)
-        ->orderBy('id', 'desc')
-        ->paginate(16);
+            // ->where('phone',$request->s)
+            // ->orderBy('id', 'desc')
+            ->paginate(10);
 
-        $query = Products::query()
-            ->orderBy('id', 'desc');
+        $query = Products::query();
+        // ->orderBy('id', 'desc');
 
         if ($request->filled('keyword')) {
             $keyword = $request->input('keyword');
             $query->where(function ($query) use ($keyword) {
-                $query->where('name_th', 'LIKE', '%' . $keyword . '%')
+                $query->where('product_code', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('name_th', 'LIKE', '%' . $keyword . '%')
                     ->orWhere('name_en', 'LIKE', '%' . $keyword . '%');
             });
         }
 
-        $resultPerPage = 24;
+        $resultPerPage = 10;
         $query = $query->paginate($resultPerPage);
 
         return view('backend/products/products', [
@@ -74,56 +80,76 @@ class ProductsController extends Controller
     {
 
         // dd($request);
+        DB::beginTransaction();
+        try {
 
-        $request->validate([
-            // 'name' => ['required', 'string', 'max:255'],
-            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:'.productssModel::class],
-            // 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
 
-        // $products = productssModel::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        // ]);
+            $products = new Products;
 
-        $products = new Products;
+            // if($request->hasFile('photo')){
 
-        // if($request->hasFile('photo')){
+            //     $oldPath = public_path($products->photo);
+            //     if(File::exists($oldPath)){
+            //         File::delete($oldPath);
+            //     }
 
-        //     $oldPath = public_path($products->photo);
-        //     if(File::exists($oldPath)){
-        //         File::delete($oldPath);
-        //     }
+            //     $file = $request->file('photo');
+            //     $destinationPath = public_path('/uploads/photo');
+            //     $filename = $file->getClientOriginalName();
 
-        //     $file = $request->file('photo');
-        //     $destinationPath = public_path('/uploads/photo');
-        //     $filename = $file->getClientOriginalName();
+            //     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            //     $newfilenam = time() . '.' .$ext;
+            //     $file->move($destinationPath, $newfilenam);
+            //     $filepath = 'uploads/photo/'.$newfilenam;
 
-        //     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        //     $newfilenam = time() . '.' .$ext;
-        //     $file->move($destinationPath, $newfilenam);
-        //     $filepath = 'uploads/photo/'.$newfilenam;
+            //     $products->photo = $filepath;
+            // }
+            $products->product_code = $request->product_code;
+            $products->name_th = $request->name_th;
+            $products->name_en = $request->name_en;
+            $products->detail = $request->detail;
+            $products->width = $request->width;
+            $products->length = $request->length;
+            $products->height = $request->height;
+            $products->dimension = ($request->width * $request->length * $request->height);
+            $products->weight = $request->weight;
+            $products->unit_id = $request->unit_id;
+            $products->type_id = $request->type_id;
+            $products->active = 1;
+            if ($products->save()) {
 
-        //     $products->photo = $filepath;
-        // }
+                if ($request->group != '') {
 
-        $products->name_th = $request->name_th;
-        $products->name_en = $request->name_en;
-        $products->detail = $request->detail;
-        $products->width = $request->width;
-        $products->lengt = $request->lengt;
-        $products->high = $request->high;
-        $products->dimension = ($request->width*$request->lengt*$request->high);
+                    $groups  = $request->group;
+                    foreach ($groups as $key => $group) {
+                        foreach ($group as $value) {
+                            $product_group = new ProductGroup;
+                            $product_group->products_id = $products->id;
+                            $product_group->regions_id = $key;
+                            $product_group->group_name = $value;
+                            $product_group->active = 1;
+                            $product_group->save();
+                        }
+                    }
+                }
+                if ($request->box_type_id != '') {
 
-        $products->weight = $request->weight;
-        $products->unit_id = $request->unit_id;
-        $products->type_id = $request->type_id;
-        $products->pack_type_id = $request->pack_type_id;
-        $products->box_type_id = $request->box_type_id;
-        $products->active = 1;
+                    $box_type_id  = $request->box_type_id;
+                    foreach ($box_type_id as $value) {
+                        $product_type = new ProductBoxType;
+                        $product_type->products_id = $products->id;
+                        $product_type->box_type_id  = $value;
+                        $product_type->active = 1;
+                        $product_type->save();
+                    }
+                }
+            }
 
-        $products->save();
+            DB::commit();
+            return redirect(route('products'))->with('success', 'บันทึกข้อมูลสำเร็จ !!!');
+        } catch (\Exception $e) {
+            return redirect(route('products_add'))->with('success', 'บันทึกข้อมูลไม่สำเร็จ !!!');
+        }
 
         // event(new Registered($products));
 
@@ -141,60 +167,245 @@ class ProductsController extends Controller
         //     $result = (new LogsSaveController)->create_log($para);
         // }
 
-        return redirect(route('products'))->with('success', 'บันทึกข้อมูลสำเร็จ !!!');
+
     }
 
     public function products_edit_action(Request $request)
     {
         // dd($request);
 
-        $request->validate([
+        DB::beginTransaction();
+        try {
 
-        ]);
 
-        $products = Products::find($request->products);
+            $request->validate([]);
 
-        // if($request->hasFile('photo')){
+            $products = Products::find($request->products);
 
-        //     $oldPath = public_path($products->photo);
-        //     if(File::exists($oldPath)){
-        //         File::delete($oldPath);
-        //     }
+            // if($request->hasFile('photo')){
 
-        //     $file = $request->file('photo');
-        //     $destinationPath = public_path('/uploads/photo');
-        //     $filename = $file->getClientOriginalName();
+            //     $oldPath = public_path($products->photo);
+            //     if(File::exists($oldPath)){
+            //         File::delete($oldPath);
+            //     }
 
-        //     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        //     $newfilenam = time().'-'.uniqid().'.' .$ext;
-        //     $file->move($destinationPath, $newfilenam);
-        //     $filepath = 'uploads/photo/'.$newfilenam;
+            //     $file = $request->file('photo');
+            //     $destinationPath = public_path('/uploads/photo');
+            //     $filename = $file->getClientOriginalName();
 
-        //     $products->photo = $filepath;
-        // }
+            //     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            //     $newfilenam = time().'-'.uniqid().'.' .$ext;
+            //     $file->move($destinationPath, $newfilenam);
+            //     $filepath = 'uploads/photo/'.$newfilenam;
 
-        $products->name_th = $request->name_th;
-        $products->name_en = $request->name_en;
-        $products->detail = $request->detail;
-        $products->width = $request->width;
-        $products->lengt = $request->lengt;
-        $products->high = $request->high;
-        $products->dimension = ($request->width*$request->lengt*$request->high);
+            //     $products->photo = $filepath;
+            // }
 
-        $products->weight = $request->weight;
-        $products->unit_id = $request->unit_id;
-        $products->type_id = $request->type_id;
-        $products->pack_type_id = $request->pack_type_id;
-        $products->box_type_id = $request->box_type_id;
-        $products->active = $request->active;
+            $products->product_code = $request->product_code;
+            $products->name_th = $request->name_th;
+            $products->name_en = $request->name_en;
+            $products->detail = $request->detail;
+            $products->width = $request->width;
+            $products->length = $request->length;
+            $products->height = $request->height;
+            $products->dimension = ($request->width * $request->length * $request->height);
+            $products->weight = $request->weight;
+            $products->unit_id = $request->unit_id;
+            $products->type_id = $request->type_id;
+            $products->active = $request->active;
+            if ($products->update()) {
 
-        $products->update();
+                if ($request->group != '') {
+                    $PG = ProductGroup::where('products_id', $products->id)->delete();
+                    $groups  = $request->group;
+                    foreach ($groups as $key => $group) {
+                        foreach ($group as $value) {
+                            $product_group = new ProductGroup;
+                            $product_group->products_id = $products->id;
+                            $product_group->regions_id = $key;
+                            $product_group->group_name = $value;
+                            $product_group->active = 1;
+                            $product_group->save();
+                        }
+                    }
+                }
+                if ($request->box_type_id != '') {
+                    $PBT = ProductBoxType::where('products_id', $products->id)->delete();
+                    $box_type_id  = $request->box_type_id;
+                    foreach ($box_type_id as $value) {
+                        $product_type = new ProductBoxType;
+                        $product_type->products_id = $products->id;
+                        $product_type->box_type_id  = $value;
+                        $product_type->active = 1;
+                        $product_type->save();
+                    }
+                }
+            }
 
-        return redirect(route('products'))->with('success', 'บันทึกข้อมูลสำเร็จ !!!');
+
+            DB::commit();
+            return redirect(route('products'))->with('success', 'บันทึกข้อมูลสำเร็จ !!!');
+        } catch (\Exception $e) {
+            return redirect(route('products_edit') . '/' . $request->products)->with('success', 'บันทึกข้อมูลไม่สำเร็จ !!!');
+        }
     }
 
 
+    public function importExcel(Request $request)
+    {
+        $this->validate($request, [
+            'serial_number_import_excel' => 'required|file|mimes:xls,xlsx'
+        ]);
+        $the_file = $request->file('serial_number_import_excel');
+
+        try {
+
+            $spreadsheet = IOFactory::load($the_file->getRealPath());
+            $sheet        = $spreadsheet->getActiveSheet();
+            $row_limit    = $sheet->getHighestDataRow();
+            $row_range    = range(2, $row_limit);
+            DB::transaction(function () use ($sheet, $row_range) {
+                $data = [];
+                foreach ($row_range as $row) {
+
+                    $product_name   = $sheet->getCell('A' . $row)->getValue();
+                    $type_name      = $sheet->getCell('B' . $row)->getValue();
+                    $serial_number  = $sheet->getCell('C' . $row)->getValue();
+                    $lot            = $sheet->getCell('D' . $row)->getValue();
+                    $year_from      = $sheet->getCell('E' . $row)->getValue();
+
+                    // $found = serialnumber::where('serial_number_no', $serial_number)->first();
+                    // if (!$found) {
+                    if ($serial_number != NULL) {
+                        // $serialnumber = new serialnumber;
+                        // $serialnumber->serial_number_no = $serial_number;
+                        // $serialnumber->serial_number_product_name = $product_name;
+                        // $serialnumber->serial_number_type_name = $type_name;
+                        // $serialnumber->serial_number_lot = $lot;
+                        // $serialnumber->serial_number_year_from = $year_from ? $year_from : null;
+                        // $serialnumber->save();
+
+                        $data[] = [
+                            'serial_number_no' => $serial_number,
+                            'serial_number_product_name' => $product_name,
+                            'serial_number_type_name' => $type_name,
+                            'serial_number_lot' => $lot,
+                            'serial_number_year_from' => $year_from ? $year_from : null,
+                        ];
+                    }
+                }
+
+                serialnumber::insert($data);
+                // คำนวณเวลาที่ใช้
+
+            });
+        } catch (\Exception $e) {
+            return back()->withErrors('There was a problem uploading the data!');
+        }
+        return back()->withSuccess('Great! Data has been successfully uploaded.');
+    }
 
 
+    public function products_import_action(Request $request)
+    {
 
+        DB::beginTransaction();
+        try {
+
+
+            $spreadsheet = IOFactory::load($the_file->getRealPath());
+            $sheet        = $spreadsheet->getActiveSheet();
+            $row_limit    = $sheet->getHighestDataRow();
+            $row_range    = range(2, $row_limit);
+            DB::transaction(function () use ($sheet, $row_range) {
+                $data = [];
+                foreach ($row_range as $row) {
+
+                    $product_code   = $sheet->getCell('A' . $row)->getValue();
+                    $name_th        = $sheet->getCell('B' . $row)->getValue();
+                    $name_en        = $sheet->getCell('C' . $row)->getValue();
+                    $width          = $sheet->getCell('D' . $row)->getValue();
+                    $length         = $sheet->getCell('E' . $row)->getValue();
+                    $height         = $sheet->getCell('F' . $row)->getValue();
+                    $weight         = $sheet->getCell('G' . $row)->getValue();
+                    $unit_id        = $sheet->getCell('H' . $row)->getValue();
+                    $box_type_id    = $sheet->getCell('I' . $row)->getValue();
+                    $group1         = $sheet->getCell('J' . $row)->getValue();
+                    $group2         = $sheet->getCell('K' . $row)->getValue();
+                    $group3         = $sheet->getCell('L' . $row)->getValue();
+
+
+                    if ($product_code != NULL) {
+
+                        $products = new Products;
+                        $products->product_code = $product_code;
+                        $products->name_th = $name_th;
+                        $products->name_en = $name_en;
+                        // $products->detail = $detail;
+                        $products->width = $width;
+                        $products->length = $length;
+                        $products->height = $height;
+                        $products->dimension = ($width * $length * $height);
+                        $products->weight = $weight;
+                        $products->unit_id = $unit_id;
+                        // $products->type_id = $type_id;
+                        $products->active = 1;
+                        if ($products->save()) {
+
+                            if ($group1 != '') {
+                                $group1_list = explode(",", $group1);
+                                foreach ($group1_list as $value) {
+                                    $product_group = new ProductGroup;
+                                    $product_group->products_id = $products->id;
+                                    $product_group->regions_id =1;
+                                    $product_group->group_name = $value;
+                                    $product_group->active = 1;
+                                    $product_group->save();
+                                }
+                            }
+                            if ($group2 != '') {
+                                $group2_list = explode(",", $group2);
+                                foreach ($group2_list as $value) {
+                                    $product_group = new ProductGroup;
+                                    $product_group->products_id = $products->id;
+                                    $product_group->regions_id =2;
+                                    $product_group->group_name = $value;
+                                    $product_group->active = 1;
+                                    $product_group->save();
+                                }
+                            }
+                            if ($group3 != '') {
+                                $group3_list = explode(",", $group3);
+                                foreach ($group3_list as $value) {
+                                    $product_group = new ProductGroup;
+                                    $product_group->products_id = $products->id;
+                                    $product_group->regions_id =3;
+                                    $product_group->group_name = $value;
+                                    $product_group->active = 1;
+                                    $product_group->save();
+                                }
+                            }
+                            if ($box_type_id != '') {
+
+                                $box_type_id_list = explode(",", $box_type_id);
+                                foreach ($box_type_id_list as $value) {
+                                    $product_type = new ProductBoxType;
+                                    $product_type->products_id = $products->id;
+                                    $product_type->box_type_id  = $value;
+                                    $product_type->active = 1;
+                                    $product_type->save();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+
+            DB::commit();
+            return redirect(route('products'))->with('success', 'บันทึกข้อมูลสำเร็จ !!!');
+        } catch (\Exception $e) {
+            return redirect(route('products_add'))->with('success', 'บันทึกข้อมูลไม่สำเร็จ !!!');
+        }
+    }
 }

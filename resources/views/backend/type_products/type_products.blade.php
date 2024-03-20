@@ -13,7 +13,7 @@
     <div class="intro-y mt-5 flex flex-col items-center sm:flex-row">
         <h2 class="mr-auto text-lg font-medium">{{ $default_pagename }}</h2>
         <div class="mt-4 flex w-full sm:mt-0 sm:w-auto">
-            <a href="{{ route('distributor_sub_add') }}"
+            <a href="{{ route('type_products_add') }}"
                 class="btn btn-primary shadow-md mr-2">เพิ่ม{{ $default_pagename }}</a>
         </div>
     </div>
@@ -42,7 +42,6 @@
                 <thead>
                     <tr>
                         <th class="text-center whitespace-nowrap">#</th>
-                        <th class="whitespace-nowrap">ผู้จัดจำหน่าย</th>
                         <th class="whitespace-nowrap">ชื่อ{{ $default_pagename }}</th>
                         <th class="text-center whitespace-nowrap">จัดการข้อมูล</th>
                     </tr>
@@ -55,15 +54,12 @@
 
 
                             <td>
-                                <div class="font-medium whitespace-nowrap">{{ $res->users->name }}</div>
-                            </td>
-                            <td>
                                 <div class="font-medium whitespace-nowrap">{{ $res->name }}</div>
                             </td>
 
                             <td class="table-report__action w-56">
                                 <div class="flex justify-center items-center">
-                                    <a class="flex items-center" href="{{ route('distributor_sub_edit', ['id' => $res->id]) }}">
+                                    <a class="flex items-center" href="{{ route('type_products_edit', ['id' => $res->id]) }}">
                                         <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> แก้ไข
                                     </a>
                                 </div>
@@ -89,7 +85,7 @@
     <script>
         function applyFilters() {
             var keyword = document.getElementById('keyword').value;
-            var newUrl = `{{ route('distributor_sub') }}?keyword=${keyword}`;
+            var newUrl = `{{ route('type_products') }}?keyword=${keyword}`;
             window.location.href = newUrl;
         }
 

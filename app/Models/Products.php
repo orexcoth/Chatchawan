@@ -22,10 +22,7 @@ class Products extends Model
         'dimension',
         'weight',
         'unit_id',
-        'packsize',
         'type_id',
-        'pack_type_id',
-        'box_type_id',
         'active',
     ];
 
@@ -34,8 +31,9 @@ class Products extends Model
         return $this->belongsTo(Unit::class, 'unit_id');
     }
 
-    public function box_type()
+
+    public function TypeProducts()
     {
-        return $this->belongsTo(BoxType::class, 'box_type_id');
+        return $this->belongsTo(TypeProducts::class, 'type_id');
     }
 }

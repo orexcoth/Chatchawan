@@ -9,7 +9,7 @@
 <div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
         <a href="" class="flex mr-auto">
-            <img alt="Midone - HTML Admin Template" class="w-6" src="{{ asset('dist/images/logo.svg') }}">
+            <img alt="Midone - HTML Admin Template" class="w-6" src="https://cdn.page.deals/static/1/s/568/609/949/05/51643939_large.png" style="width: 3.5rem;">
         </a>
         <a href="javascript:;" id="mobile-menu-toggler">
             <i data-lucide="bar-chart-2" class="w-8 h-8 text-white transform -rotate-90"></i>
@@ -20,7 +20,7 @@
             @if ($menu == 'devider')
                 <li class="menu__devider my-6"></li>
             @else
-                
+
                 <li>
                     <a href="{{ isset($menu['route_name']) ? route($menu['route_name'], $menu['params']) : 'javascript:;' }}" class="{{ $first_level_active_index == $menuKey ? 'menu menu--active' : 'menu' }}">
                         <div class="menu__icon">
@@ -67,9 +67,9 @@
                         </ul>
                     @endif
                 </li>
-                
-                
-                
+
+
+
             @endif
         @endforeach
     </ul>
