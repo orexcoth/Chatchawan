@@ -18,9 +18,7 @@ use App\Http\Controllers\Backend\BoxTypeController;
 use App\Http\Controllers\Backend\DistributorSubController;
 use App\Http\Controllers\Backend\TypeProductsController;
 use App\Http\Controllers\Backend\BoxsController;
-
-
-
+use App\Http\Controllers\Backend\PoController;
 use App\Http\Controllers\Frontend\FrontendPageController;
 
 /*
@@ -34,7 +32,7 @@ use App\Http\Controllers\Frontend\FrontendPageController;
 |
 */
 
-Route::get('dark-mode-switcher', [DarkModeController::class, 'switch'])->name('dark-mode-switcher');
+// Route::get('dark-mode-switcher', [DarkModeController::class, 'switch'])->name('dark-mode-switcher');
 Route::get('color-scheme-switcher/{color_scheme}', [ColorSchemeController::class, 'switch'])->name('color-scheme-switcher');
 
 Route::get('change-language/{locale}', [LanguageController::class, 'changeLanguage'])->name('change.language');
@@ -98,12 +96,17 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('products')->group(function () {
-
             Route::get('', [ProductsController::class, 'products'])->name('products');
             Route::get('add', [ProductsController::class, 'products_add'])->name('products_add');
             Route::post('add-action', [ProductsController::class, 'products_add_action'])->name('products_add_action');
             Route::get('edit/{id}', [ProductsController::class, 'products_edit'])->name('products_edit');
             Route::post('edit-action', [ProductsController::class, 'products_edit_action'])->name('products_edit_action');
+        });
+
+        Route::prefix('Po')->name('po.')->group(function () {
+            Route::get('', [PoController::class, 'index'])->name('index');
+            Route::get('detail', [PoController::class, 'detail'])->name('detail');
+            Route::get('/create', [PoController::class, 'create'])->name('create');
         });
 
 

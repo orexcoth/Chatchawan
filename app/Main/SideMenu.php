@@ -17,25 +17,31 @@ class SideMenu
                 'icon' => 'home',
                 'route_name' => 'backendDashboard',
                 'params' => [],
-                'title' => 'แดชบอร์ด'
+                'title' => 'Dashboard'
             ],
             'users' => [
                 'icon' => 'User',
                 'route_name' => 'BN_users',
                 'params' => [],
-                'title' => 'ยูสเซอร์'
+                'title' => 'User'
+            ],
+            'products' => [
+                'icon' => 'package',
+                'route_name' => 'products',
+                'params' => [],
+                'title' => 'Products'
+            ],
+            'PO' => [
+                'icon' => 'file',
+                'route_name' => 'po.index',
+                'params' => [],
+                'title' => 'PO'
             ],
             'distributor_sub' => [
                 'icon' => 'Users',
                 'route_name' => 'distributor_sub',
                 'params' => [],
                 'title' => 'ผู้จัดจำหน่ายรายย่อย'
-            ],
-            'products' => [
-                'icon' => 'package',
-                'route_name' => 'products',
-                'params' => [],
-                'title' => 'สินค้า'
             ],
             'Manage' => [
                 'icon' => 'Settings',
