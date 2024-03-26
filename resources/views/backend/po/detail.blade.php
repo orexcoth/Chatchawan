@@ -7,17 +7,24 @@
 @section('subcontent')
     <div class="intro-y mt-5 flex flex-wrap items-center sm:flex-nowrap" style="justify-content:space-between">
         <div>
-            Po_id :
-        </div>
-        <div>
+            <p>Po_id :0001</p>
             <p>ผู้จัดจำหน่ายรายย่อย : Jone Cena</p>
         </div>
+        <div></div>
         <div class="flex">
-            <button class="btn btn-primary mx-2 text-white">
+            <a href="{{ route('po.index') }}" class="btn btn-primary mx-2 text-white">
                 <i class="fa-regular fa-floppy-disk mr-1"></i>
                 Save
-            </button>
+            </a>
         </div>
+    </div>
+    <div class="mt-10">
+        <select class="tom-select" style="width: 30rem;">
+            <option value="กรุณาเลือกสถานะใบ PO">กรุณาเลือกสถานะใบ PO</option>
+            <option value="รออนุมัติ">รออนุมัติ</option>
+            <option value="อนุมัติ">อนุมัติ</option>
+            <option value="ไม่อนุมัติ">ไม่อนุมัติ</option>
+        </select>
     </div>
 
     @livewire('po.detail')

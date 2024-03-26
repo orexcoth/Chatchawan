@@ -6,14 +6,20 @@
 
 @section('subcontent')
     {{-- <h2 class="intro-y mt-10 text-lg font-medium">{{ $default_pagename }}</h2> --}}
-    <div class="mt-5 grid grid-cols-12 gap-6">
+    <div class="mt-5">
         <div class="intro-y col-span-12 mt-2 flex flex-wrap items-center sm:flex-nowrap">
             <a href="{{ route('po.create') }}"
                 class="border py-2 px-3 rounded-md font-medium cursor-pointer bg-primary border-primary text-white mr-2 shadow-md ">
                 <i class="fa-solid fa-plus mr-1"></i>
                 CREATE
             </a>
-            <div class="mx-auto hidden text-slate-500 md:block"></div>
+            <div class="mx-auto hidden text-slate-500 md:block">
+                <a href=""
+                    class="border py-2 px-3 rounded-md font-medium cursor-pointer bg-primary border-primary text-white mr-2 shadow-md ">
+                    <i class="fa-regular fa-file-excel r-1"></i>
+                    Template Excel
+                </a>
+            </div>
             <div class="mt-3 w-full sm:ml-auto sm:mt-0 sm:w-auto md:ml-0">
                 <div class="relative w-56 text-slate-500">
                     <input type="text" placeholder="Search..."

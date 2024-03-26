@@ -1,5 +1,5 @@
 <div>
-    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible mt-5">
         <table class="w-full text-left -mt-2 border-separate border-spacing-y-[10px]">
             <thead class="">
                 <tr class="">
@@ -47,7 +47,7 @@
                     </td>
                     <td class="px-5 py-3 border-b bg-white shadow-[20px_3px_20px_#0000000b]">
                         <div class="flex items-center justify-center text-danger">
-                            Inactive
+                            กำลังดำเนินการ
                         </div>
                     </td>
                     <td class="px-5 py-3 border-b bg-white shadow-[20px_3px_20px_#0000000b]">
@@ -56,17 +56,9 @@
                                 <i class="fa-regular fa-rectangle-list stroke-1.5 mr-1 h-4 w-4"></i>
                                 Detail
                             </a>
-                            <a class="flex items-center text-warning mx-2 cursor-pointer">
-                                <i class="fa-regular fa-pen-to-square stroke-1.5 mr-1 h-4 w-4"></i>
-                                Edit
-                            </a>
                             <a class="flex items-center text-danger mx-2 cursor-pointer">
                                 <i class="fa-regular fa-trash-can stroke-1.5 mr-1 h-4 w-4"></i>
                                 Delete
-                            </a>
-                            <a class="flex items-center text-primary mx-2 cursor-pointer">
-                                <i class="fa-regular fa-file-excel stroke-1.5 mr-1 h-4 w-4"></i>
-                                Export
                             </a>
                         </div>
                     </td>

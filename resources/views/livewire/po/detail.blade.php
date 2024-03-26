@@ -5,36 +5,63 @@
                 กล่องที่ 1
             </h3>
         </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left">
+        <div class="">
+            <table class="w-full">
                 <thead>
                     <tr>
                         <th class="font-medium px-5 py-3 border-b-2 whitespace-nowrap ">
-                            ชื่อสินค้า
+                            Code
                         </th>
-                        <th class="font-medium px-5 py-3 border-b-2 whitespace-nowrap text-right ">
-                            Quantity
+                        <th class="font-medium px-5 py-3 border-b-2 whitespace-nowrap ">
+                            Customer Code
                         </th>
-                        <th class="font-medium px-5 py-3 border-b-2 whitespace-nowrap text-right ">
-                            Price
+                        <th class="font-medium px-5 py-3 border-b-2 whitespace-nowrap ">
+                            สินค้า
+                        </th>
+                        <th class="font-medium px-5 py-3 border-b-2 whitespace-nowrap ">
+                            ขนาด
+                        </th>
+                        <th class="font-medium px-5 py-3 border-b-2 whitespace-nowrap ">
+                            unit
+                        </th>
+                        <th class="font-medium px-5 py-3 border-b-2 whitespace-nowrap ">
+                            จำนวน
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="px-5 py-3 border-b ">
+                        <td class="px-5 py-3 border-b w-32 ">
                             <div>
-                                <input type="text" class="form-control w-full" placeholder="กะหล่ำเดือน">
+                                <input type="text" class="form-control w-full" placeholder="0001">
                             </div>
                         </td>
-                        <td class="px-5 py-3 border-b w-32 text-right ">
+                        <td class="px-5 py-3 border-b w-32 ">
                             <div>
-                                <input type="text" class="form-control w-full" placeholder="80">
+                                <input type="text" class="form-control w-full" placeholder="0001-1100">
                             </div>
                         </td>
-                        <td class="px-5 py-3 border-b w-32 text-right ">
+                        <td class="px-5 py-3 border-b w-50 ">
                             <div>
-                                <input type="text" class="form-control w-full" placeholder="00">
+                                <select class="tom-select">
+                                    <option>กะหล่ำเดือน</option>
+                                    <option>มะพร้าวน้ำซุป</option>
+                                </select>
+                            </div>
+                        </td>
+                        <td class="px-5 py-3 border-b w-32 ">
+                            <div>
+                                <input type="text" class="form-control w-full" placeholder="1x1x1">
+                            </div>
+                        </td>
+                        <td class="px-5 py-3 border-b w-32 ">
+                            <div>
+                                <input type="text" class="form-control w-full" placeholder="unit">
+                            </div>
+                        </td>
+                        <td class="px-5 py-3 border-b w-32 ">
+                            <div>
+                                <input type="text" class="form-control w-full" placeholder="20">
                             </div>
                         </td>
                     </tr>
