@@ -73,24 +73,24 @@ class SideMenu
                     ]
                 ]
             ],
-            'settings' => [
-                'icon' => 'Settings',
-                'title' => 'ตั้งค่า',
-                'sub_menu' => [
-                    'settings-system' => [
-                        'icon' => 'Monitor',
-                        'route_name' => 'BN_settings',
-                        'params' => [],
-                        'title' => 'ตั้งค่าระบบ'
-                    ],
-                    'settings-logs' => [
-                        'icon' => 'List',
-                        'route_name' => 'BN_settings',
-                        'params' => [],
-                        'title' => 'ประวัติการใช้งาน'
-                    ]
-                ]
-            ],
+            // 'settings' => [
+            //     'icon' => 'Settings',
+            //     'title' => 'ตั้งค่า',
+            //     'sub_menu' => [
+            //         'settings-system' => [
+            //             'icon' => 'Monitor',
+            //             'route_name' => 'BN_settings',
+            //             'params' => [],
+            //             'title' => 'ตั้งค่าระบบ'
+            //         ],
+            //         'settings-logs' => [
+            //             'icon' => 'List',
+            //             'route_name' => 'BN_settings',
+            //             'params' => [],
+            //             'title' => 'ประวัติการใช้งาน'
+            //         ]
+            //     ]
+            // ],
 
 
 

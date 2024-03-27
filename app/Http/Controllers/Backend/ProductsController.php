@@ -21,7 +21,10 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Products;
 use App\Models\ProductGroup;
 use App\Models\ProductBoxType;
-
+use App\Models\Regions;
+use App\Models\Unit;
+use App\Models\BoxType;
+use App\Models\TypeProducts;
 
 
 class ProductsController extends Controller
@@ -251,60 +254,6 @@ class ProductsController extends Controller
     }
 
 
-    public function importExcel(Request $request)
-    {
-        $this->validate($request, [
-            'serial_number_import_excel' => 'required|file|mimes:xls,xlsx'
-        ]);
-        $the_file = $request->file('serial_number_import_excel');
-
-        try {
-
-            $spreadsheet = IOFactory::load($the_file->getRealPath());
-            $sheet        = $spreadsheet->getActiveSheet();
-            $row_limit    = $sheet->getHighestDataRow();
-            $row_range    = range(2, $row_limit);
-            DB::transaction(function () use ($sheet, $row_range) {
-                $data = [];
-                foreach ($row_range as $row) {
-
-                    $product_name   = $sheet->getCell('A' . $row)->getValue();
-                    $type_name      = $sheet->getCell('B' . $row)->getValue();
-                    $serial_number  = $sheet->getCell('C' . $row)->getValue();
-                    $lot            = $sheet->getCell('D' . $row)->getValue();
-                    $year_from      = $sheet->getCell('E' . $row)->getValue();
-
-                    // $found = serialnumber::where('serial_number_no', $serial_number)->first();
-                    // if (!$found) {
-                    if ($serial_number != NULL) {
-                        // $serialnumber = new serialnumber;
-                        // $serialnumber->serial_number_no = $serial_number;
-                        // $serialnumber->serial_number_product_name = $product_name;
-                        // $serialnumber->serial_number_type_name = $type_name;
-                        // $serialnumber->serial_number_lot = $lot;
-                        // $serialnumber->serial_number_year_from = $year_from ? $year_from : null;
-                        // $serialnumber->save();
-
-                        $data[] = [
-                            'serial_number_no' => $serial_number,
-                            'serial_number_product_name' => $product_name,
-                            'serial_number_type_name' => $type_name,
-                            'serial_number_lot' => $lot,
-                            'serial_number_year_from' => $year_from ? $year_from : null,
-                        ];
-                    }
-                }
-
-                serialnumber::insert($data);
-                // คำนวณเวลาที่ใช้
-
-            });
-        } catch (\Exception $e) {
-            return back()->withErrors('There was a problem uploading the data!');
-        }
-        return back()->withSuccess('Great! Data has been successfully uploaded.');
-    }
-
 
     public function products_import_action(Request $request)
     {
@@ -328,27 +277,39 @@ class ProductsController extends Controller
                     $length         = $sheet->getCell('E' . $row)->getValue();
                     $height         = $sheet->getCell('F' . $row)->getValue();
                     $weight         = $sheet->getCell('G' . $row)->getValue();
-                    $unit_id        = $sheet->getCell('H' . $row)->getValue();
+                    $unit        = $sheet->getCell('H' . $row)->getValue();
                     $box_type_id    = $sheet->getCell('I' . $row)->getValue();
-                    $group1         = $sheet->getCell('J' . $row)->getValue();
-                    $group2         = $sheet->getCell('K' . $row)->getValue();
-                    $group3         = $sheet->getCell('L' . $row)->getValue();
+                    $type           = $sheet->getCell('J' . $row)->getValue();
+                    $group1         = $sheet->getCell('K' . $row)->getValue();
+                    $group2         = $sheet->getCell('L' . $row)->getValue();
+                    $group3         = $sheet->getCell('M' . $row)->getValue();
 
 
                     if ($product_code != NULL) {
+
+                        if ($type != NULL) {
+                            $type_id = TypeProducts::where('name', $type)->first()->select('id');
+                        } else {
+                            $type_id = '';
+                        }
+                        if ($unit != NULL) {
+                            $unit_id = Unit::where('name', $unit)->first()->select('id');
+                        } else {
+                            $unit_id = '';
+                        }
+
 
                         $products = new Products;
                         $products->product_code = $product_code;
                         $products->name_th = $name_th;
                         $products->name_en = $name_en;
-                        // $products->detail = $detail;
                         $products->width = $width;
                         $products->length = $length;
                         $products->height = $height;
                         $products->dimension = ($width * $length * $height);
                         $products->weight = $weight;
                         $products->unit_id = $unit_id;
-                        // $products->type_id = $type_id;
+                        $products->type_id = $type_id;
                         $products->active = 1;
                         if ($products->save()) {
 
@@ -357,7 +318,7 @@ class ProductsController extends Controller
                                 foreach ($group1_list as $value) {
                                     $product_group = new ProductGroup;
                                     $product_group->products_id = $products->id;
-                                    $product_group->regions_id =1;
+                                    $product_group->regions_id = 1;
                                     $product_group->group_name = $value;
                                     $product_group->active = 1;
                                     $product_group->save();
@@ -368,7 +329,7 @@ class ProductsController extends Controller
                                 foreach ($group2_list as $value) {
                                     $product_group = new ProductGroup;
                                     $product_group->products_id = $products->id;
-                                    $product_group->regions_id =2;
+                                    $product_group->regions_id = 2;
                                     $product_group->group_name = $value;
                                     $product_group->active = 1;
                                     $product_group->save();
@@ -379,7 +340,7 @@ class ProductsController extends Controller
                                 foreach ($group3_list as $value) {
                                     $product_group = new ProductGroup;
                                     $product_group->products_id = $products->id;
-                                    $product_group->regions_id =3;
+                                    $product_group->regions_id = 3;
                                     $product_group->group_name = $value;
                                     $product_group->active = 1;
                                     $product_group->save();
